@@ -1,0 +1,145 @@
+{
+	"info": {
+		"_postman_id": "minsait-person-api-collection",
+		"name": "Minsait Person API",
+		"description": "Coleção de requisições para a API REST de gerenciamento de pessoas (CRUD com SQLite)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000"
+		},
+		{
+			"key": "personId",
+			"value": ""
+		}
+	],
+	"item": [
+		{
+			"name": "Create Person",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.response.code === 201) {",
+							"    var json = pm.response.json();",
+							"    pm.collectionVariables.set('personId', json.id);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Ada Lovelace\",\n  \"email\": \"ada@example.com\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/persons",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"persons"
+					]
+				},
+				"description": "Cria uma nova pessoa. Retorna o objeto criado com ID, CreatedAt e UpdatedAt. O ID é salvo automaticamente na variável personId para uso em Get/Update/Delete."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Persons",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/persons",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"persons"
+					]
+				},
+				"description": "Retorna a lista de todas as pessoas ordenadas por data de criação."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Person By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/persons/{{personId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"persons",
+						"{{personId}}"
+					]
+				},
+				"description": "Retorna uma pessoa pelo ID (GUID). Retorna 404 se não encontrada."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Person",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Ada King\",\n  \"email\": \"ada.king@example.com\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/persons/{{personId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"persons",
+						"{{personId}}"
+					]
+				},
+				"description": "Atualiza parcialmente uma pessoa. Campos opcionais: name e/ou email. Retorna 404 se não encontrada."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Person",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/persons/{{personId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"persons",
+						"{{personId}}"
+					]
+				},
+				"description": "Remove uma pessoa pelo ID. Retorna o objeto removido ou 404 se não encontrada."
+			},
+			"response": []
+		}
+	]
+}
