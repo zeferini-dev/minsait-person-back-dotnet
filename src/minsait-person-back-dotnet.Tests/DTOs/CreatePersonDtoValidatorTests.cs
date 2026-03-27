@@ -59,6 +59,26 @@ public class CreatePersonDtoValidatorTests
     }
 
     [Fact]
+    public void Should_Have_Error_When_Email_Has_No_Domain()
+    {
+        var dto = new CreatePersonDto { Name = "Valid Name", Email = "teste@" };
+        var result = _validator.Validate(dto);
+
+        result.IsValid.Should().BeFalse();
+        result.Errors.Should().Contain(e => e.PropertyName == "Email");
+    }
+
+    [Fact]
+    public void Should_Have_Error_When_Email_Domain_Has_No_Tld()
+    {
+        var dto = new CreatePersonDto { Name = "Valid Name", Email = "teste@domain" };
+        var result = _validator.Validate(dto);
+
+        result.IsValid.Should().BeFalse();
+        result.Errors.Should().Contain(e => e.PropertyName == "Email");
+    }
+
+    [Fact]
     public void Should_Have_Error_When_Email_Too_Long()
     {
         var dto = new CreatePersonDto { Name = "Valid Name", Email = new string('a', 181) + "@mail.com" };
