@@ -85,3 +85,7 @@ Esta API utiliza Event Sourcing para persistência. Todos os comandos (create, u
 - `PersonCreated` - Quando uma pessoa é criada
 - `PersonUpdated` - Quando uma pessoa é atualizada
 - `PersonDeleted` - Quando uma pessoa é removida
+
+## Documentacao Especifica de Update
+
+- Guia dedicado: `docs/update-person.md`

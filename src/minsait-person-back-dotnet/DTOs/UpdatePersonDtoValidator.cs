@@ -7,6 +7,7 @@ public class UpdatePersonDtoValidator : AbstractValidator<UpdatePersonDto>
     public UpdatePersonDtoValidator()
     {
         RuleFor(x => x.Name)
+            .MinimumLength(1)
             .MaximumLength(120);
         RuleFor(x => x.Email)
             .EmailAddress()
