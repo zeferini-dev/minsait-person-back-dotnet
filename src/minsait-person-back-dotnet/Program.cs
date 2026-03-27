@@ -7,11 +7,14 @@ using MinsaitPersonBack.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 // Add services to the container
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<MinsaitPersonBack.Filters.FluentValidationActionFilter>();
 });
+
 builder.Services.AddTransient<IValidator<CreatePersonDto>, CreatePersonDtoValidator>();
 builder.Services.AddTransient<IValidator<UpdatePersonDto>, UpdatePersonDtoValidator>();
 builder.Services.AddTransient<IValidator<Person>, PersonValidator>();
