@@ -1,9 +1,12 @@
 using FluentValidation;
+using System.Text.RegularExpressions;
 
 namespace MinsaitPersonBack.Models;
 
 public class PersonValidator : AbstractValidator<Person>
 {
+    private static readonly string EmailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+
     public PersonValidator()
     {
         RuleFor(x => x.Name)
@@ -11,7 +14,8 @@ public class PersonValidator : AbstractValidator<Person>
             .Length(1, 120);
         RuleFor(x => x.Email)
             .NotEmpty()
-            .EmailAddress()
+            .Matches(EmailPattern)
+            .WithMessage("'{PropertyName}' must be a valid email address with a domain name.")
             .MaximumLength(180);
     }
 }
