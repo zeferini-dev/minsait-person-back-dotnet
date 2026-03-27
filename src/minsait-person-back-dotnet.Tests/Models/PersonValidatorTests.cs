@@ -100,6 +100,42 @@ public class PersonValidatorTests
     }
 
     [Fact]
+    public void Should_Have_Error_When_Email_Has_No_Domain()
+    {
+        var person = new Person
+        {
+            Id = Guid.NewGuid(),
+            Name = "Ada Lovelace",
+            Email = "teste@",
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        };
+
+        var result = _validator.Validate(person);
+
+        result.IsValid.Should().BeFalse();
+        result.Errors.Should().Contain(e => e.PropertyName == "Email");
+    }
+
+    [Fact]
+    public void Should_Have_Error_When_Email_Domain_Has_No_Tld()
+    {
+        var person = new Person
+        {
+            Id = Guid.NewGuid(),
+            Name = "Ada Lovelace",
+            Email = "teste@domain",
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        };
+
+        var result = _validator.Validate(person);
+
+        result.IsValid.Should().BeFalse();
+        result.Errors.Should().Contain(e => e.PropertyName == "Email");
+    }
+
+    [Fact]
     public void Should_Have_Error_When_Email_Too_Long()
     {
         var person = new Person

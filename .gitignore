@@ -2,51 +2,95 @@
 bin/
 obj/
 out/
+*.dll
+*.exe
+*.app
+*.log
 
 # User-specific files
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
+*.user.*
 
 # Visual Studio Code settings
 .vscode/
 /.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
 # Visual Studio settings
 .vs/
 /.vs/
+.vs/*
 
 # Rider settings
 .idea/
+.idea/*
+*.sln.iml
 
 # Build results
-*.dll
-*.exe
-*.app
-*.log
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
 
 # NuGet packages
 *.nupkg
+*.snupkg
 packages/
 .nuget/
+*.nuget.props
+*.nuget.targets
 
 # Test results
 TestResults/
 *.TestResults/
+coverage/
+*.coverage
+*.coveragexml
 
 # Publish outputs
 publish/
 *.publish/
+PublishProfiles/
+
+# Local user secrets
+appsettings.local.json
+appsettings.*.local.json
+
+# Entity Framework
+*.mdf
+*.ldf
+*.db
+*.db-shm
+*.db-wal
 
 # OS generated files
 .DS_Store
 Thumbs.db
+ehthumbs.db
 
 # Others
 *.swp
 *.bak
 *.tmp
+*.temp
+*~
+.env
+.env.local
+
+# Docker
+docker-compose.override.yml
 
 # Local environment files
 .env

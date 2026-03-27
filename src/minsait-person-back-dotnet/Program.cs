@@ -7,11 +7,14 @@ using MinsaitPersonBack.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
 // Add services to the container
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<MinsaitPersonBack.Filters.FluentValidationActionFilter>();
 });
+
 builder.Services.AddTransient<IValidator<CreatePersonDto>, CreatePersonDtoValidator>();
 builder.Services.AddTransient<IValidator<UpdatePersonDto>, UpdatePersonDtoValidator>();
 builder.Services.AddTransient<IValidator<Person>, PersonValidator>();
@@ -30,14 +33,13 @@ builder.Services.AddSwaggerGen(options =>
     if (File.Exists(xmlPath))
         options.IncludeXmlComments(xmlPath);
 
-    options.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
+    options.CustomSchemaIds(Program.ResolveSchemaId);
 });
 
 // Configure SQLite database
 builder.Services.AddDbContext<PersonDbContext>(options =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-        ?? "Data Source=persons.db";
+    var connectionString = Program.ResolveConnectionString(builder.Configuration);
     options.UseSqlite(connectionString);
 });
 
@@ -78,6 +80,13 @@ using (var scope = app.Services.CreateScope())
 var port = Environment.GetEnvironmentVariable("PORT") ?? "3000";
 app.Run($"http://0.0.0.0:{port}");
 
-public partial class Program { } // For integration testing purposes
+public partial class Program // For integration testing purposes
+{
+    public static string? ResolveSchemaId(Type type)
+        => type.FullName?.Replace("+", ".");
+
+    public static string ResolveConnectionString(IConfiguration configuration)
+        => configuration.GetConnectionString("DefaultConnection") ?? "Data Source=persons.db";
+}
 
 /*Commit #*/

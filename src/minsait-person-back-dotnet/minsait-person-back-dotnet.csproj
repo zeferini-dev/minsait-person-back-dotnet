@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>MinsaitPersonBack</RootNamespace>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -18,5 +19,13 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.1" />
   </ItemGroup>
+
+  <Target Name="RemoveLegacyArtifacts" BeforeTargets="BeforeBuild">
+    <ItemGroup>
+      <LegacyArtifacts Include="$(OutputPath)zeferini-person-api-dotnet*" />
+      <LegacyArtifacts Include="$(IntermediateOutputPath)zeferini-person-api-dotnet*" />
+    </ItemGroup>
+    <Delete Files="@(LegacyArtifacts)" ContinueOnError="true" />
+  </Target>
 
 </Project>
